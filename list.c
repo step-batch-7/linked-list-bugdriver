@@ -61,3 +61,22 @@ void display(List_ptr list)
     p_walk = p_walk->next;
   }
 }
+
+Status insert_at(List_ptr list, int value, int position)
+{
+  if (position < 0 || position > list->count + 1)
+    return Failure;
+    
+  if (position == 0)
+    return add_to_start(list, value);
+
+  Node *element = create_node(value);
+  Node *p_walk = list->head;
+  for (int index = 0; index < position - 1; index++)
+  {
+    p_walk = p_walk->next;
+  }
+  element->next = p_walk->next;
+  p_walk->next = element;
+  return Success;
+}

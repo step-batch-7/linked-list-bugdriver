@@ -14,6 +14,7 @@ char ask_option()
   char option;
   printf("(a) add a number to the end of the list\n");
   printf("(b) add a number to the start of the list\n");
+  printf("(c) insert a number at a given position in the list\n");
   printf("(l) display the list of numbers\n");
   printf("(m) exit\n");
   printf("\nPlease enter the alphabet of the operation you would like to perform\n");
@@ -23,12 +24,13 @@ char ask_option()
 
 void perform_operation(List_ptr list, char option)
 {
-  int number;
+  int number,position;
+  Status status;
   switch (option)
   {
   case 'a':
     number = get_input("Enter a number : ");
-    Status status = add_to_end(list, number);
+    status = add_to_end(list, number);
     if (status == Success)
     {
       printf("%d is added to the end of the list\n\n", number);
@@ -36,10 +38,19 @@ void perform_operation(List_ptr list, char option)
     break;
   case 'b':
     number = get_input("Enter a number : ");
-    Status status = add_to_start(list, number);
+    status = add_to_start(list, number);
     if (status == Success)
     {
       printf("%d is added to the start of the list\n\n", number);
+    }
+    break;
+  case 'c':
+    number = get_input("Enter a number : ");
+    position = get_input("Enter position : ");
+    status = insert_at(list, number,position);
+    if (status == Success)
+    {
+      printf("%d is inserted at given position in the list\n\n", number);
     }
     break;
   case 'l':
