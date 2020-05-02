@@ -15,6 +15,7 @@ char ask_option()
   printf("(a) add a number to the end of the list\n");
   printf("(b) add a number to the start of the list\n");
   printf("(c) insert a number at a given position in the list\n");
+  printf("(d) add a unique item on the list at the end(if it alreay exists, do not insert)\n");
   printf("(l) display the list of numbers\n");
   printf("(k) check if a number exists in the list\n");
   printf("(m) exit\n");
@@ -52,6 +53,14 @@ void perform_operation(List_ptr list, char option)
     if (status == Success)
     {
       printf("%d is inserted at given position in the list\n\n", number);
+    }
+    break;
+  case 'd':
+    number = get_input("Enter a number : ");
+    status = add_unique(list, number);
+    if (status == Success)
+    {
+      printf("%d is added to the end of the list\n\n", number);
     }
     break;
   case 'k':

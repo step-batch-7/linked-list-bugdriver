@@ -94,3 +94,12 @@ Status includes(List_ptr list, int value)
   }
   return Failure;
 }
+
+Status add_unique(List_ptr list, int value)
+{
+  if (!includes(list, value))
+  {
+    return add_to_end(list, value);
+  }
+  return Failure;
+}
