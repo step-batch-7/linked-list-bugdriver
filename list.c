@@ -82,23 +82,23 @@ Status insert_at(List_ptr list, int value, int position)
   return Success;
 }
 
-Status includes(List_ptr list, int value)
+int index_of(List_ptr list, int value)
 {
   Node *p_walk = list->head;
-  while (p_walk != NULL)
+  for (int index = 0; p_walk != NULL; index++)
   {
     if (p_walk->value == value)
     {
-      return Success;
+      return index;
     }
     p_walk = p_walk->next;
   }
-  return Failure;
+  return -1;
 }
 
 Status add_unique(List_ptr list, int value)
 {
-  if (!includes(list, value))
+  if (index_of(list, value) == -1)
   {
     return add_to_end(list, value);
   }
@@ -155,6 +155,15 @@ Status remove_at(List_ptr list, int position)
   p_walk->next = element_to_remove->next;
   free(element_to_remove);
   list->count -= 1;
-  printf("list count is : %d", list->count);
   return Success;
+}
+
+Status remove_first_occurrence(List_ptr list, int value)
+{
+  int first_occured_position = index_of(list, value);
+  if (first_occured_position != -1)
+  {
+    return remove_at(list, first_occured_position);
+  }
+  return Failure;
 }
