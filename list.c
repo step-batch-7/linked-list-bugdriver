@@ -103,3 +103,13 @@ Status add_unique(List_ptr list, int value)
   }
   return Failure;
 }
+
+Status remove_from_start(List_ptr list){
+  if(list->head == NULL){
+    return Failure;
+  }
+  Node *element_to_remove = list->head;
+  list->head = list->head->next;
+  free(element_to_remove);
+  return Success;
+}
