@@ -43,11 +43,11 @@ Status add_to_start(List_ptr list, int value)
 Status add_to_end(List_ptr list, int value)
 {
   Node_ptr element = create_node(value);
-  Node_ptr *ptr_to_set = &list->head;
   if (list == NULL || element == NULL)
   {
     return Failure;
   }
+  Node_ptr *ptr_to_set = &list->head;
   if (list->head != NULL)
   {
     ptr_to_set = &list->last->next;
@@ -161,11 +161,6 @@ Status remove_at(List_ptr list, int position)
   {
     return remove_from_start(list);
   }
-  if (position == list->count - 1)
-  {
-    printf("came into this block");
-    return remove_from_end(list);
-  }
   Node_ptr p_walk = list->head;
   for (int index = 0; index < position - 1; index++)
   {
@@ -201,6 +196,10 @@ Status remove_all_occurrences(List_ptr list, int value)
 
 Status clear_list(List_ptr list)
 {
+  if (list == NULL)
+  {
+    return Failure;
+  }
   while (remove_from_start(list) != Failure)
     ;
   return Success;
