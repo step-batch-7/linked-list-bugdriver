@@ -104,12 +104,35 @@ Status add_unique(List_ptr list, int value)
   return Failure;
 }
 
-Status remove_from_start(List_ptr list){
-  if(list->head == NULL){
+Status remove_from_start(List_ptr list)
+{
+  if (list->head == NULL)
+  {
     return Failure;
   }
   Node *element_to_remove = list->head;
   list->head = list->head->next;
+  free(element_to_remove);
+  return Success;
+}
+
+Status remove_from_end(List_ptr list)
+{
+  Node *p_walk = list->head;
+  if (p_walk == NULL)
+  {
+    return Failure;
+  }
+  if (p_walk->next == NULL)
+  {
+    return remove_from_start(list);
+  }
+  while (p_walk->next->next != NULL)
+  {
+    p_walk = p_walk->next;
+  }
+  Node *element_to_remove = p_walk->next;
+  p_walk->next = NULL;
   free(element_to_remove);
   return Success;
 }

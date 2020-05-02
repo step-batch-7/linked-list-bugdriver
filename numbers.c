@@ -17,6 +17,7 @@ char ask_option()
   printf("(c) insert a number at a given position in the list\n");
   printf("(d) add a unique item on the list at the end(if it alreay exists, do not insert)\n");
   printf("(e) remove a number from the beginning of the list\n");
+  printf("(f) remove a number from the end of the list\n");
   printf("(l) display the list of numbers\n");
   printf("(k) check if a number exists in the list\n");
   printf("(m) exit\n");
@@ -69,6 +70,13 @@ void perform_operation(List_ptr list, char option)
     if (status == Success)
     {
       printf("first element is removed from list\n\n");
+    }
+    break;
+  case 'f':
+    status = remove_from_end(list);
+    if (status == Success)
+    {
+      printf("last element is removed from list\n\n");
     }
     break;
   case 'k':
