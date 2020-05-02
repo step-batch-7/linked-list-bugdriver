@@ -78,6 +78,7 @@ Status insert_at(List_ptr list, int value, int position)
   }
   element->next = p_walk->next;
   p_walk->next = element;
+  list->count += 1;
   return Success;
 }
 
@@ -113,6 +114,7 @@ Status remove_from_start(List_ptr list)
   Node *element_to_remove = list->head;
   list->head = list->head->next;
   free(element_to_remove);
+  list->count -= 1;
   return Success;
 }
 
@@ -134,5 +136,25 @@ Status remove_from_end(List_ptr list)
   Node *element_to_remove = p_walk->next;
   p_walk->next = NULL;
   free(element_to_remove);
+  list->count -= 1;
+  return Success;
+}
+
+Status remove_at(List_ptr list, int position)
+{
+  if (position < 0 || position > list->count)
+    return Failure;
+  if (position == 0)
+    return remove_from_start(list);
+  Node *p_walk = list->head;
+  for (int index = 0; index < position - 1; index++)
+  {
+    p_walk = p_walk->next;
+  }
+  Node *element_to_remove = p_walk->next;
+  p_walk->next = element_to_remove->next;
+  free(element_to_remove);
+  list->count -= 1;
+  printf("list count is : %d", list->count);
   return Success;
 }
