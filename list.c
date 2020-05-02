@@ -2,10 +2,19 @@
 #include <stdlib.h>
 #include "list.h"
 
+Status is_null(void *element)
+{
+  if (element == NULL)
+  {
+    return Success;
+  }
+  return Failure;
+}
+
 Node_ptr create_node(value)
 {
   Node_ptr node = malloc(sizeof(Node));
-  if (node == NULL)
+  if (is_null(node))
   {
     return node;
   }
@@ -17,7 +26,7 @@ Node_ptr create_node(value)
 List_ptr create_list(void)
 {
   List_ptr list = malloc(sizeof(List));
-  if (list == NULL)
+  if (is_null(list))
   {
     return list;
   }
@@ -30,7 +39,7 @@ List_ptr create_list(void)
 Status add_to_start(List_ptr list, int value)
 {
   Node_ptr element = create_node(value);
-  if (list == NULL || element == NULL)
+  if (is_null(list) || is_null(element))
   {
     return Failure;
   }
@@ -43,7 +52,7 @@ Status add_to_start(List_ptr list, int value)
 Status add_to_end(List_ptr list, int value)
 {
   Node_ptr element = create_node(value);
-  if (list == NULL || element == NULL)
+  if (is_null(list) || is_null(element))
   {
     return Failure;
   }
@@ -70,24 +79,22 @@ void display(List_ptr list)
 
 Status insert_at(List_ptr list, int value, int position)
 {
-  if (list == NULL || position < 0 || position > list->count + 1)
+  Node_ptr node = create_node(value);
+  if (is_null(node) || is_null(list) || position < 0 || position > list->count + 1)
   {
     return Failure;
   }
-
   if (position == 0)
   {
     return add_to_start(list, value);
   }
-
-  Node_ptr element = create_node(value);
   Node_ptr p_walk = list->head;
   for (int index = 0; index < position - 1; index++)
   {
     p_walk = p_walk->next;
   }
-  element->next = p_walk->next;
-  p_walk->next = element;
+  node->next = p_walk->next;
+  p_walk->next = node;
   list->count += 1;
   return Success;
 }
@@ -117,7 +124,7 @@ Status add_unique(List_ptr list, int value)
 
 Status remove_from_start(List_ptr list)
 {
-  if (list == NULL || list->head == NULL)
+  if (is_null(list) || is_null(list->head))
   {
     return Failure;
   }
@@ -131,11 +138,11 @@ Status remove_from_start(List_ptr list)
 Status remove_from_end(List_ptr list)
 {
   Node_ptr p_walk = list->head;
-  if (list == NULL || p_walk == NULL)
+  if (is_null(list) || is_null(p_walk))
   {
     return Failure;
   }
-  if (p_walk->next == NULL)
+  if (is_null(p_walk->next))
   {
     return remove_from_start(list);
   }
@@ -153,13 +160,17 @@ Status remove_from_end(List_ptr list)
 
 Status remove_at(List_ptr list, int position)
 {
-  if (list == NULL || position < 0 || position >= list->count)
+  if (is_null(list) || position < 0 || position >= list->count)
   {
     return Failure;
   }
   if (position == 0)
   {
     return remove_from_start(list);
+  }
+  if (position == list->count - 1)
+  {
+    return remove_from_end(list);
   }
   Node_ptr p_walk = list->head;
   for (int index = 0; index < position - 1; index++)
@@ -196,7 +207,7 @@ Status remove_all_occurrences(List_ptr list, int value)
 
 Status clear_list(List_ptr list)
 {
-  if (list == NULL)
+  if (is_null(list))
   {
     return Failure;
   }
