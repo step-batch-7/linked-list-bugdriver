@@ -167,3 +167,14 @@ Status remove_first_occurrence(List_ptr list, int value)
   }
   return Failure;
 }
+
+Status remove_all_occurrences(List_ptr list, int value)
+{
+  if (index_of(list, value) == -1)
+  {
+    return Failure;
+  }
+  while (remove_first_occurrence(list, value) != Failure)
+    ;
+  return Success;
+}
