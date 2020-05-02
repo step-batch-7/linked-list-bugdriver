@@ -178,3 +178,10 @@ Status remove_all_occurrences(List_ptr list, int value)
     ;
   return Success;
 }
+
+Status clear_list(List_ptr list)
+{
+  while (remove_from_start(list) != Failure)
+    ;
+  return Success;
+}

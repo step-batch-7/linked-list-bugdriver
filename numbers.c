@@ -21,8 +21,9 @@ char ask_option()
   printf("(g) remove a number from a given position in the list\n");
   printf("(h) remove first occurrence of a number\n");
   printf("(i) remove all occurrences of a number\n");
-  printf("(l) display the list of numbers\n");
+  printf("(j) clear the whole list\n");
   printf("(k) check if a number exists in the list\n");
+  printf("(l) display the list of numbers\n");
   printf("(m) exit\n"); 
   printf("\nPlease enter the alphabet of the operation you would like to perform\n");
   scanf("%c", &option);
@@ -104,6 +105,13 @@ void perform_operation(List_ptr list, char option)
     if (status == Success)
     {
       printf("all occurence of %d is removed from list\n\n", number);
+    }
+    break;
+  case 'j':
+    status = clear_list(list);
+    if (status == Success)
+    {
+      printf("list is clear\n\n");
     }
     break;
   case 'k':
