@@ -9,11 +9,13 @@ int get_input(char *input_text)
   return number;
 }
 
-int read_value(){
+int read_value()
+{
   return get_input("Enter number : ");
 }
 
-int read_position(){
+int read_position()
+{
   return get_input("Enter position : ");
 }
 
@@ -32,7 +34,7 @@ char ask_option()
   printf("(j) clear the whole list\n");
   printf("(k) check if a number exists in the list\n");
   printf("(l) display the list of numbers\n");
-  printf("(m) exit\n"); 
+  printf("(m) exit\n");
   printf("\nPlease enter the alphabet of the operation you would like to perform\n");
   scanf("%c", &option);
   return option;
@@ -40,7 +42,7 @@ char ask_option()
 
 Status perform_operation(List_ptr list, char option)
 {
-  int number,position;
+  int position;
   Status status;
   switch (option)
   {
@@ -51,7 +53,7 @@ Status perform_operation(List_ptr list, char option)
     status = add_to_start(list, read_value());
     break;
   case 'c':
-    status = insert_at(list, read_value(),read_position());
+    status = insert_at(list, read_value(), read_position());
     break;
   case 'd':
     status = add_unique(list, read_value());
@@ -63,7 +65,7 @@ Status perform_operation(List_ptr list, char option)
     status = remove_from_end(list);
     break;
   case 'g':
-    status = remove_at(list,read_position());
+    status = remove_at(list, read_position());
     break;
   case 'h':
     status = remove_first_occurrence(list, read_value());
@@ -77,7 +79,7 @@ Status perform_operation(List_ptr list, char option)
   case 'k':
     position = index_of(list, read_value());
     status = Success;
-    if(position == -1)
+    if (position == -1)
       status = Failure;
     break;
   case 'l':
@@ -101,10 +103,12 @@ int main(void)
   while (selected_option != 'm')
   {
     Status status = perform_operation(list, selected_option);
-    if(status == Success){
+    if (status == Success)
+    {
       printf("operation Succesfull\n\n");
     }
-    if(status == Failure){
+    if (status == Failure)
+    {
       printf("operation Failed\n\n");
     }
     fflush(stdin);
