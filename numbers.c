@@ -9,6 +9,14 @@ int get_input(char *input_text)
   return number;
 }
 
+int read_value(){
+  return get_input("Enter number : ");
+}
+
+int read_position(){
+  return get_input("Enter position : ");
+}
+
 char ask_option()
 {
   char option;
@@ -30,106 +38,59 @@ char ask_option()
   return option;
 }
 
-void perform_operation(List_ptr list, char option)
+Status perform_operation(List_ptr list, char option)
 {
   int number,position;
   Status status;
   switch (option)
   {
   case 'a':
-    number = get_input("Enter a number : ");
-    status = add_to_end(list, number);
-    if (status == Success)
-    {
-      printf("%d is added to the end of the list\n\n", number);
-    }
+    status = add_to_end(list, read_value());
     break;
   case 'b':
-    number = get_input("Enter a number : ");
-    status = add_to_start(list, number);
-    if (status == Success)
-    {
-      printf("%d is added to the start of the list\n\n", number);
-    }
+    status = add_to_start(list, read_value());
     break;
   case 'c':
-    number = get_input("Enter a number : ");
-    position = get_input("Enter position : ");
-    status = insert_at(list, number,position);
-    if (status == Success)
-    {
-      printf("%d is inserted at given position in the list\n\n", number);
-    }
+    status = insert_at(list, read_value(),read_position());
     break;
   case 'd':
-    number = get_input("Enter a number : ");
-    status = add_unique(list, number);
-    if (status == Success)
-    {
-      printf("%d is added to the end of the list\n\n", number);
-    }
+    status = add_unique(list, read_value());
     break;
   case 'e':
     status = remove_from_start(list);
-    if (status == Success)
-    {
-      printf("first element is removed from list\n\n");
-    }
     break;
   case 'f':
     status = remove_from_end(list);
-    if (status == Success)
-    {
-      printf("last element is removed from list\n\n");
-    }
     break;
   case 'g':
-    position = get_input("Enter position : ");
-    status = remove_at(list,position);
-    if (status == Success)
-    {
-      printf("element is removed from %d position of the list\n\n", position);
-    }
+    status = remove_at(list,read_position());
     break;
   case 'h':
-    number = get_input("Enter a number : ");
-    status = remove_first_occurrence(list, number);
-    if (status == Success)
-    {
-      printf("first occurence of %d is removed from list\n\n", number);
-    }
+    status = remove_first_occurrence(list, read_value());
     break;
   case 'i':
-    number = get_input("Enter a number : ");
-    status = remove_all_occurrences(list, number);
-    if (status == Success)
-    {
-      printf("all occurence of %d is removed from list\n\n", number);
-    }
+    status = remove_all_occurrences(list, read_value());
     break;
   case 'j':
     status = clear_list(list);
-    if (status == Success)
-    {
-      printf("list is clear\n\n");
-    }
     break;
   case 'k':
-    number = get_input("Enter a number : ");
-    position = index_of(list, number);
-    if (position != -1)
-    {
-      printf("%d is present in the list\n\n", number);
-    }
+    position = index_of(list, read_value());
+    status = Success;
+    if(position == -1)
+      status = Failure;
     break;
   case 'l':
     display(list);
     printf("\n");
+    status = Success;
     break;
   default:
     printf("wrong option!\n");
+    status = Failure;
     break;
   }
+  return status;
 }
 
 int main(void)
@@ -139,8 +100,16 @@ int main(void)
 
   while (selected_option != 'm')
   {
-    perform_operation(list, selected_option);
+    Status status = perform_operation(list, selected_option);
+    if(status == Success){
+      printf("operation Succesfull\n\n");
+    }
+    if(status == Failure){
+      printf("operation Failed\n\n");
+    }
     fflush(stdin);
     selected_option = ask_option();
   }
+  destroy_list(list);
+  return 0;
 }
