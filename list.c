@@ -66,7 +66,7 @@ Status insert_at(List_ptr list, int value, int position)
 {
   if (position < 0 || position > list->count + 1)
     return Failure;
-    
+
   if (position == 0)
     return add_to_start(list, value);
 
@@ -79,4 +79,18 @@ Status insert_at(List_ptr list, int value, int position)
   element->next = p_walk->next;
   p_walk->next = element;
   return Success;
+}
+
+Status includes(List_ptr list, int value)
+{
+  Node *p_walk = list->head;
+  while (p_walk != NULL)
+  {
+    if (p_walk->value == value)
+    {
+      return Success;
+    }
+    p_walk = p_walk->next;
+  }
+  return Failure;
 }

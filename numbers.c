@@ -16,6 +16,7 @@ char ask_option()
   printf("(b) add a number to the start of the list\n");
   printf("(c) insert a number at a given position in the list\n");
   printf("(l) display the list of numbers\n");
+  printf("(k) check if a number exists in the list\n");
   printf("(m) exit\n");
   printf("\nPlease enter the alphabet of the operation you would like to perform\n");
   scanf("%c", &option);
@@ -51,6 +52,14 @@ void perform_operation(List_ptr list, char option)
     if (status == Success)
     {
       printf("%d is inserted at given position in the list\n\n", number);
+    }
+    break;
+  case 'k':
+    number = get_input("Enter a number : ");
+    status = includes(list, number);
+    if (status == Success)
+    {
+      printf("%d is present in the list\n\n", number);
     }
     break;
   case 'l':
