@@ -96,6 +96,43 @@ test_status assert_add_unique_does_not_exist()
   return Fail;
 }
 
+test_status assert_remove_from_start_in_empty_list()
+{
+  List_ptr list = create_list();
+  Status status = remove_from_start(list);
+  if (!status && list->head == NULL && list->last == NULL && list->count == 0)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_remove_from_start_in_list_with_one_number()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  Status status = remove_from_start(list);
+  if (status && list->head == NULL && list->last == NULL && list->count == 0)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_remove_from_start()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  add_to_end(list, 20);
+  add_to_end(list, 30);
+  Status status = remove_from_start(list);
+  if (status && list->head->value == 20 && list->last->value == 30 && list->count == 2)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
 int main(void)
 {
   describe("add_to_end()");
@@ -108,7 +145,11 @@ int main(void)
   it("should insert_at given position in list", assert_insert_at());
   it("should not insert at invalid position", assert_insert_at_wrong_position());
   describe("add_unique()");
-  it("should not add if number already exist in list", assert_add_unique_if_exist());
+  it("should not add if number exist in list", assert_add_unique_if_exist());
   it("should add to end if number doesn't exist in list", assert_add_unique_does_not_exist());
+  describe("remove from beginning of list");
+  it("should not remove if list is empty", assert_remove_from_start_in_empty_list());
+  it("should remove the only number of list if list has one element", assert_remove_from_start_in_list_with_one_number());
+  it("should remove the first element of list with many elements", assert_remove_from_start());
   return 0;
 }
