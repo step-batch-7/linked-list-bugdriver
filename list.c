@@ -80,7 +80,7 @@ void display(List_ptr list)
 Status insert_at(List_ptr list, int value, int position)
 {
   Node_ptr node = create_node(value);
-  if (is_null(node) || is_null(list) || position < 0 || position > list->count + 1)
+  if (is_null(node) || is_null(list) || position < 0 || position >= list->count + 1)
   {
     return Failure;
   }
@@ -130,6 +130,10 @@ Status remove_from_start(List_ptr list)
   }
   Node_ptr element_to_remove = list->head;
   list->head = list->head->next;
+  if (list->head == NULL)
+  {
+    list->last = NULL;
+  }
   free(element_to_remove);
   list->count -= 1;
   return Success;
