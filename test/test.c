@@ -100,7 +100,7 @@ test_status assert_remove_from_start_in_empty_list()
 {
   List_ptr list = create_list();
   Status status = remove_from_start(list);
-  if (!status && list->head == NULL && list->last == NULL && list->count == 0)
+  if (status == Failure && list->head == NULL && list->last == NULL && list->count == 0)
   {
     return Pass;
   }
@@ -175,7 +175,7 @@ test_status assert_remove_at_wrong_position()
   List_ptr list = create_list();
   Status status1 = remove_at(list, 1);
   Status status2 = remove_at(list, -1);
-  if (!status1 && !status2 && list->count == 0)
+  if (status1 == Failure && status2 == Failure && list->count == 0)
   {
     return Pass;
   }
@@ -190,6 +190,32 @@ test_status assert_remove_at()
   add_to_end(list, 30);
   Status status = remove_at(list, 1);
   if (list->count == 2 && status && list->head->value == 10 && list->last->value == 30)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_remove_first_occurrence_if_not_exist()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  add_to_end(list, 20);
+  Status status = remove_first_occurrence(list, 15);
+  if (status == Failure && list->count == 2)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_remove_first_occurrence()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  add_to_end(list, 20);
+  Status status = remove_first_occurrence(list, 20);
+  if (status && list->count == 1 && list->last->value == 10)
   {
     return Pass;
   }
@@ -221,5 +247,8 @@ int main(void)
   describe("remove_at()");
   it("should not remove if position is wrong", assert_remove_at_wrong_position());
   it("should remove element from list given a valid position", assert_remove_at());
+  describe("remove_first_occurrence()");
+  it("should not remove if number doesn't exist in list", assert_remove_first_occurrence_if_not_exist());
+  it("should remove first occurrence of number if number exist in the list", assert_remove_first_occurrence());
   return 0;
 }
