@@ -170,6 +170,32 @@ test_status assert_remove_from_end()
   return Fail;
 }
 
+test_status assert_remove_at_wrong_position()
+{
+  List_ptr list = create_list();
+  Status status1 = remove_at(list, 1);
+  Status status2 = remove_at(list, -1);
+  if (!status1 && !status2 && list->count == 0)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_remove_at()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  add_to_end(list, 20);
+  add_to_end(list, 30);
+  Status status = remove_at(list, 1);
+  if (list->count == 2 && status && list->head->value == 10 && list->last->value == 30)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
 int main(void)
 {
   describe("add_to_end()");
@@ -192,5 +218,8 @@ int main(void)
   it("should not remove if list is empty", assert_remove_from_end_of_empty_list());
   it("should remove from end in list with only element", assert_remove_from_end_of_list_with_one_element());
   it("should remove from end in list with many elements", assert_remove_from_end());
+  describe("remove_at()");
+  it("should not remove if position is wrong", assert_remove_at_wrong_position());
+  it("should remove element from list given a valid position", assert_remove_at());
   return 0;
 }
