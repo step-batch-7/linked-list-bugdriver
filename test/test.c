@@ -222,6 +222,59 @@ test_status assert_remove_first_occurrence()
   return Fail;
 }
 
+test_status assert_remove_all_occurrences_if_number_not_exist()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  Status status = remove_all_occurrences(list, 20);
+  if (!status && list->count == 1)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_remove_all_occurrences()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  add_to_end(list, 20);
+  add_to_end(list, 10);
+  add_to_end(list, 10);
+  Status status = remove_all_occurrences(list, 10);
+  if (status && list->count == 1 && list->head->value == 20 && list->last->value == 20)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_clear_list()
+{
+  List_ptr list = create_list();
+  add_to_end(list, 10);
+  add_to_end(list, 20);
+  clear_list(list);
+  if (list->count == 0 && list->head == NULL && list->last == NULL)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
+test_status assert_index_of()
+{
+  List_ptr list = create_list();
+  int index1 = index_of(list, 10);
+  add_to_end(list, 10);
+  int index2 = index_of(list, 10);
+  if (index1 == -1 && index2 == 0)
+  {
+    return Pass;
+  }
+  return Fail;
+}
+
 int main(void)
 {
   describe("add_to_end()");
@@ -250,5 +303,12 @@ int main(void)
   describe("remove_first_occurrence()");
   it("should not remove if number doesn't exist in list", assert_remove_first_occurrence_if_not_exist());
   it("should remove first occurrence of number if number exist in the list", assert_remove_first_occurrence());
+  describe("remove_all_occurrences()");
+  it("should not remove if number doesn't exist", assert_remove_all_occurrences_if_number_not_exist());
+  it("should remove all occurrences if number exist in the list", assert_remove_all_occurrences());
+  describe("clear the list");
+  it("should remove all elements from list", assert_clear_list());
+  describe("check if number exist in list");
+  it("should check if number exist in the list", assert_index_of());
   return 0;
 }
