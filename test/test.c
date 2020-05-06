@@ -277,6 +277,7 @@ test_status assert_index_of()
 
 int main(void)
 {
+  printf("\nTEST START..............\n\n");
   describe("add_to_end()");
   it("should add to the end of empty list", assert_add_to_end_in_empty_list());
   it("should add to the end of list", assert_add_to_end());
@@ -310,5 +311,6 @@ int main(void)
   it("should remove all elements from list", assert_clear_list());
   describe("check if number exist in list");
   it("should check if number exist in the list", assert_index_of());
+  printf("\nTEST END..............");
   return 0;
 }
