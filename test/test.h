@@ -1,7 +1,7 @@
 #ifndef __TEST_H
 #define __TEST_H
 
-#define SUCCES_SYMBOL "    ✅  "
+#define SUCCESS_SYMBOL "    ✅  "
 #define FAILURE_SYMBOL "    ❌ "
 
 typedef enum

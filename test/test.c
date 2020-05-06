@@ -278,39 +278,51 @@ test_status assert_index_of()
 int main(void)
 {
   printf("\nTEST START..............\n\n");
+
   describe("add_to_end()");
   it("should add to the end of empty list", assert_add_to_end_in_empty_list());
   it("should add to the end of list", assert_add_to_end());
+
   describe("add_to_start()");
   it("should add to the start of empty list", assert_add_to_start_in_empty_list());
   it("should add to the start of list", assert_add_to_start());
+
   describe("insert_at()");
   it("should insert_at given position in list", assert_insert_at());
   it("should not insert at invalid position", assert_insert_at_wrong_position());
+
   describe("add_unique()");
   it("should not add if number exist in list", assert_add_unique_if_exist());
   it("should add to end if number doesn't exist in list", assert_add_unique_does_not_exist());
+
   describe("remove_from_start()");
   it("should not remove if list is empty", assert_remove_from_start_in_empty_list());
   it("should remove the only number of list if list has one element", assert_remove_from_start_in_list_with_one_number());
   it("should remove the first element of list with many elements", assert_remove_from_start());
+
   describe("remove_from_end()");
   it("should not remove if list is empty", assert_remove_from_end_of_empty_list());
   it("should remove from end in list with only element", assert_remove_from_end_of_list_with_one_element());
   it("should remove from end in list with many elements", assert_remove_from_end());
+
   describe("remove_at()");
   it("should not remove if position is wrong", assert_remove_at_wrong_position());
   it("should remove element from list given a valid position", assert_remove_at());
+
   describe("remove_first_occurrence()");
   it("should not remove if number doesn't exist in list", assert_remove_first_occurrence_if_not_exist());
   it("should remove first occurrence of number if number exist in the list", assert_remove_first_occurrence());
+
   describe("remove_all_occurrences()");
   it("should not remove if number doesn't exist", assert_remove_all_occurrences_if_number_not_exist());
   it("should remove all occurrences if number exist in the list", assert_remove_all_occurrences());
+
   describe("clear the list");
   it("should remove all elements from list", assert_clear_list());
+
   describe("check if number exist in list");
   it("should check if number exist in the list", assert_index_of());
+
   printf("\nTEST END..............");
   return 0;
 }

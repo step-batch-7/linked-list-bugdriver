@@ -13,7 +13,7 @@ void it(String statement, test_status status)
 {
   if (status)
   {
-    printf(SUCCES_SYMBOL);
+    printf(SUCCESS_SYMBOL);
   }
   else
   {
